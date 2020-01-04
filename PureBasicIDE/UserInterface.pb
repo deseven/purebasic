@@ -590,7 +590,47 @@ Procedure CustomizeTabBarGadget()
   
   CompilerIf #CompileMac
     With TabBarGadgetInclude
-      \TabBarColor   = GetCocoaColor("windowBackgroundColor")
+      If OSVersion() >= #PB_OS_MacOSX_10_14
+        \TabBarColor   = GetCocoaColor("windowBackgroundColor")
+      Else
+        ;
+        ; Note: The GetThemeBrushAsColor() color below always gives me full white no matter what brush i try (except the black brush),
+        ;   so i think there is something wrong with that.
+        ;   Try the 10.4+ only alternative first in the x86 version where this is always available
+        ;
+        HIThemeBrushCreateCGColor(#kThemeBrushAlertBackgroundActive, @CGColor.i)
+        If CGColor
+          NbComponents = CGColorGetNumberOfComponents(CGColor)
+          *Components  = CGColorGetComponents(CGColor)
+          
+          If *Components And NbComponents = 2 ; its grey and alpha
+            
+            CompilerIf #PB_Compiler_Processor = #PB_Processor_x64 ; CGFloat is a double on 64 bit system
+              c = 255 * PeekD(*Components)
+            CompilerElse
+              c = 255 * PeekF(*Components)
+            CompilerEndIf
+            
+            \TabBarColor = RGBA(c, c, c, $FF)
+            
+          ElseIf *Components And NbComponents = 4 ; its rgba
+            
+            CompilerIf #PB_Compiler_Processor = #PB_Processor_x64
+              r = 255 * PeekD(*Components)
+              g = 255 * PeekD(*Components + 8)
+              b = 255 * PeekD(*Components + 16)
+            CompilerElse
+              r = 255 * PeekF(*Components)
+              g = 255 * PeekF(*Components + 4)
+              b = 255 * PeekF(*Components + 8)
+            CompilerEndIf
+            
+            \TabBarColor = RGBA(r, g, b, $FF)
+          EndIf
+          
+          CGColorRelease(CGColor)
+        EndIf
+      EndIf
       \BorderColor   = GetCocoaColor("systemGrayColor")
       \FaceColor     = GetCocoaColor("controlBackgroundColor")
       \TextColor     = GetCocoaColor("textColor")
@@ -608,7 +648,9 @@ Procedure CreateGUI()
     
     CompilerIf #CompileMac
       ; Quick fix for TabBarGadget And ToolbarGadget lack of transparency support
-      SetWindowColor(#WINDOW_Main, GetCocoaColor("windowBackgroundColor"))
+      If OSVersion() >= #PB_OS_MacOSX_10_14
+        SetWindowColor(#WINDOW_Main, GetCocoaColor("windowBackgroundColor"))
+      EndIf
     CompilerEndIf
     
     SmartWindowRefresh(#WINDOW_Main, 1)
@@ -2616,7 +2658,7 @@ Procedure EventLoopCallback()
   
   
 ; IDE Options = PureBasic 5.71 LTS (MacOS X - x64)
-; CursorPosition = 596
-; FirstLine = 587
-; Folding = ------------
+; CursorPosition = 627
+; FirstLine = 594
+; Folding = -------------
 ; EnableXP

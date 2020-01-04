@@ -118,6 +118,10 @@ Copyright (c) 2001-2005 Michael B. Allen <mba2000 ioplex.com>
 The __Silk Icon Theme__ included with PureBasic and SpiderBasic IDEs is based on [Mark James]'s __[Silk icon set 1.3]__, released under [CC-BY-2.5].
 Some icons were slightly modified by [Timo «Freak» Harter].
 
+## Monokai theme
+
+The PureBasic IDE uses Monokai color palette, originally created by [Wimer Hazenberg](http://www.monokai.nl).
+
 
 # Acknowledgements
 
