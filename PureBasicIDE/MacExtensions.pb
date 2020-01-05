@@ -232,8 +232,3 @@ CompilerIf #CompileMacCocoa
   EndProcedure
   
 CompilerEndIf
-; IDE Options = PureBasic 5.71 LTS (MacOS X - x64)
-; CursorPosition = 213
-; FirstLine = 194
-; Folding = ----
-; EnableXP

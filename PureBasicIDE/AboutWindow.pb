@@ -143,9 +143,3 @@ Procedure AboutWindowEvents(EventID)
   EndIf
   
 EndProcedure
-
-; IDE Options = PureBasic 5.71 LTS (MacOS X - x64)
-; CursorPosition = 61
-; FirstLine = 40
-; Folding = --
-; EnableXP
