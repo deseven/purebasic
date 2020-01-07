@@ -5618,7 +5618,7 @@ DataSection
   Data.l $464646 ; #COLOR_SelectionRepeat
   Data.l $000000 ; #COLOR_PlainBackground
   
-  ; base color palette created by Wimer Hazenberg (http://www.monokai.nl)
+  ; Based on the Monokai color scheme, copyright by Wimer Hazenberg (https://monokai.nl)
   Data$ "Monokai"
   Data.l $C2CFCF
   Data.l $222827
